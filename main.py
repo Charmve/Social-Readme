@@ -67,7 +67,8 @@ def update_file_content(file_path, new_time_str):
     with open(file_path, 'r') as file:
         content = file.read()
 
-    updated_content = re.sub(r':clock\d{1,4} `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`', new_time_str, content)
+    pattern = r'最近更新时间 (.*?) `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`'
+    updated_content = re.sub(pattern, '最近更新时间 ' + new_time_str, content)
 
     with open(file_path, 'w') as file:
         file.write(updated_content)
