@@ -19,7 +19,6 @@ BRAIN_LIMIT = int(os.getenv('INPUT_BRAIN_LIMIT'))
 DOUBAN_NAME = os.getenv('INPUT_DOUBAN_NAME')
 DOUBAN_LIMIT = int(os.getenv('INPUT_DOUBAN_LIMIT'))
 
-
 def decode_readme(data: str) -> str:
     """Decode the contents of old readme"""
     decoded_bytes = base64.b64decode(data)
@@ -27,9 +26,9 @@ def decode_readme(data: str) -> str:
 
 
 if __name__ == "__main__":
-    g = Github(GH_TOKEN)
+    gh = Github(GH_TOKEN)
     try:
-        repo = g.get_repo(REPOSITORY)
+        repo = gh.get_repo(REPOSITORY)
     except GithubException:
         print(
             "Authentication Error. Try saving a GitHub Token in your Repo Secrets or Use the GitHub Actions Token, "
@@ -58,7 +57,7 @@ if __name__ == "__main__":
     if new_readme == old_readme:
         print("nothing changed")
     else:
-        print("readme change, start update...")
+        print("readme change, start update ...")
         repo.update_file(path=contents.path, message=COMMIT_MESSAGE,
                          content=new_readme, sha=contents.sha)
         print("your readme update completed!")
