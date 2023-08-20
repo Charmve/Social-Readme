@@ -106,8 +106,8 @@ if __name__ == "__main__":
         print("nothing changed")
     else:
         print("readme change, start update ...")
-        repo.update_file(path=contents.path, message=COMMIT_MESSAGE,
-                         content=new_readme, sha=contents.sha)
+        #repo.update_file(path=contents.path, message=COMMIT_MESSAGE,
+        #                 content=new_readme, sha=contents.sha)
         
         # 获取当前上海时区时间
         current_shanghai_time = get_shanghai_time()
