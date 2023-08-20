@@ -88,12 +88,28 @@ def generate_new_readme(start_comment: str, end_comment: str, content: str, read
 
     return re.sub(pattern, repl, readme)
 
-
 def format_time(timestamp) -> datetime:
-    gmt_format = '%a, %d %b %Y %H:%M:%S GMT'
-    date_str = datetime.datetime.strptime(timestamp, gmt_format) + datetime.timedelta(hours=8)
-    return date_str.date()
+    # 定义输入时间字符串可能的格式列表
+    input_formats = [
+        "%a, %d %b %Y %H:%M:%S %Z",      # 格式1
+        "%a, %d %b %Y %H:%M:%S %z",      # 格式2
+        "%a, %d %b %Y %H:%M:%S GMT",     # 格式3
+        "%a, %d %b %Y %H:%M:%S %z%Z",    # 格式4
+        # 在这里添加更多格式...
+    ]
 
+    # 尝试使用不同格式解析时间字符串
+    for input_format in input_formats:
+        try:
+            date_obj = datetime.datetime.strptime(timestamp, input_format)
+            # 转换为所需的输出格式
+            formatted_date = date_obj.strftime('%Y-%m-%d %I:%M:%S %p')
+            return formatted_date
+        except ValueError:
+            continue
+
+    # 如果无法解析任何格式，返回空字符串或其他适当的值
+    return ""
 
 def generate_rating_star(desc) -> str:
     pattern = re.compile(r'<p>推荐: [\S\S]+</p>')
