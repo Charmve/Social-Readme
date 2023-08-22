@@ -117,6 +117,7 @@ if __name__ == "__main__":
     print(new_time_str) #:clock7 `2023-08-20 18:59:44`
     pattern = r"最近更新时间 (.*?) `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`"
     updated_content = re.sub(pattern, "最近更新时间 " + new_time_str, new_readme)
+    updated_content = re.sub(r':clock\d{1,4} `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`', new_time_str, updated_content)
     repo.update_file(path=contents.path, message=COMMIT_MESSAGE,
                          content=updated_content, sha=contents.sha)
         
