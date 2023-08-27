@@ -50,15 +50,15 @@ def convert_time(current_time):
 
     minute = current_time.minute
     if minute >= 0 and minute <= 15:
-        time_str = f":clock{hour12}"
+        time_str = f":clock{hour12}:"
     elif minute > 15 and minute <= 30:
-        time_str = f":clock{hour12}30"
+        time_str = f":clock{hour12}30:"
     elif minute > 30 and minute <= 45:
-        time_str = f":clock{hour12}30"
+        time_str = f":clock{hour12}30:"
     elif minute > 45 and minute <= 60:
-        time_str = f":clock{hour12 + 1}"
+        time_str = f":clock{hour12 + 1}:"
     else:
-        time_str = f":clock{hour12}30"
+        time_str = f":clock{hour12}30:"
 
     return time_str
 
@@ -114,10 +114,10 @@ if __name__ == "__main__":
     current_shanghai_time = get_shanghai_time()
     # 转换当前时间为指定格式
     new_time_str = convert_time(current_shanghai_time) + f" `{current_shanghai_time.strftime('%Y-%m-%d %H:%M:%S')}`"
-    print(new_time_str) #:clock7 `2023-08-20 18:59:44`
+    print(new_time_str) #:clock7: `2023-08-20 18:59:44`
     pattern = r"最近更新时间 (.*?) `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`"
     updated_content = re.sub(pattern, "最近更新时间 " + new_time_str, new_readme)
-    updated_content = re.sub(r':clock\d{1,4} `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`', new_time_str, updated_content)
+    # updated_content = re.sub(r':clock\d{1,4}: `(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})`', new_time_str, updated_content)
     repo.update_file(path=contents.path, message=COMMIT_MESSAGE,
                          content=updated_content, sha=contents.sha)
         
